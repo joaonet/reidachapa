@@ -14,14 +14,14 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .method-btn.active { background-color: #f59e0b; color: white; border-color: #f59e0b; }
         
-        /* IMAGENS GRANDES */
         .img-container {
             display: flex;
             align-items: center;
             justify-content: center;
             background-color: #fff;
             overflow: hidden;
-            height: 512px; 
+            height: 200px; 
+            position: relative;
         }
         .img-container img {
             width: 100%;
@@ -30,23 +30,21 @@
         }
         .category-bebidas .img-container img {
             object-fit: contain; 
-            padding: 20px;
+            padding: 15px;
         }
 
-        /* TEXTO ILUSTRATIVO AUMENTADO EM 1X (DOBRO) */
+        /* TEXTO AMARELO CLARO, SEM FUNDO E BEM DISCRETO */
         .ilustrativa-tag {
             position: absolute;
-            bottom: 12px;
-            right: 12px;
-            font-style: italic;
-            font-weight: 800;
-            color: #666;
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 4px 12px;
-            border-radius: 99px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            font-size: 16px; 
-            letter-spacing: 0.5px;
+            bottom: 3px;
+            right: 5px;
+            color: #fff9c4; /* Amarelo bem clarinho */
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3); /* Sombra leve para ler em fundos claros */
+            background-color: transparent;
+            font-size: 7px;
+            pointer-events: none;
+            text-transform: lowercase;
+            font-weight: 500;
         }
 
         .product-card { transition: transform 0.2s; }
@@ -70,75 +68,74 @@
         </div>
     </nav>
 
-    <header class="primary-gradient text-white py-10 px-4 text-center relative overflow-hidden">
+    <header class="primary-gradient text-white py-8 px-4 text-center relative overflow-hidden">
         <div class="relative z-10">
-            <h2 class="text-4xl font-black mb-2 drop-shadow-lg italic uppercase">Rei da Chapa</h2>
-            <p class="text-xs font-bold bg-black/20 inline-block px-4 py-1 rounded-full uppercase tracking-widest">O Sabor que manda!</p>
+            <h2 class="text-3xl font-black mb-1 drop-shadow-lg italic uppercase">Rei da Chapa</h2>
+            <p class="text-[10px] font-bold bg-black/20 inline-block px-3 py-1 rounded-full uppercase tracking-widest">O Sabor que manda!</p>
         </div>
-        <i class="fas fa-fire absolute -right-10 -bottom-10 text-[180px] text-white/10 rotate-12"></i>
+        <i class="fas fa-fire absolute -right-10 -bottom-10 text-[140px] text-white/10 rotate-12"></i>
     </header>
 
-    <div class="container mx-auto px-4 mt-6">
+    <div class="container mx-auto px-4 mt-4">
         <div class="bg-white rounded-2xl p-4 shadow-sm border-l-4 border-yellow-500 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <div class="text-yellow-600 bg-yellow-100 p-2 rounded-lg">
                     <i class="fas fa-clock"></i>
                 </div>
                 <div>
-                    <h4 class="text-xs font-black uppercase text-gray-900">Status da Loja</h4>
-                    <p class="text-[10px] font-bold text-gray-500 uppercase">Apenas para Entrega</p>
+                    <h4 class="text-[10px] font-black uppercase text-gray-900">Status</h4>
+                    <p class="text-[9px] font-bold text-gray-500 uppercase">Apenas Entrega</p>
                 </div>
             </div>
             <div class="text-right">
                 <span id="status-loja" class="text-[10px] font-black px-2 py-1 rounded-md uppercase italic">Verificando...</span>
-                <p id="display-horario" class="text-sm font-black text-gray-800 mt-1">18:00 às 22:30</p>
+                <p id="display-horario" class="text-xs font-black text-gray-800 mt-1">18:00 às 22:30</p>
             </div>
         </div>
     </div>
 
-    <div class="sticky top-[64px] bg-white/90 backdrop-blur-md z-40 py-4 shadow-sm mt-4">
+    <div class="sticky top-[68px] bg-white/90 backdrop-blur-md z-40 py-3 shadow-sm mt-4">
         <div class="flex overflow-x-auto px-4 gap-2 no-scrollbar">
-            <button id="btn-Sanduiches" onclick="filterCategory('Sanduiches')" class="cat-btn bg-yellow-500 text-white px-5 py-2 rounded-full text-sm font-bold whitespace-nowrap shadow-md">Sanduíches</button>
-            <button id="btn-Artesanais" onclick="filterCategory('Artesanais')" class="cat-btn bg-white border border-gray-200 px-5 py-2 rounded-full text-sm font-bold whitespace-nowrap">Artesanais</button>
-            <button id="btn-Bebidas" onclick="filterCategory('Bebidas')" class="cat-btn bg-white border border-gray-200 px-5 py-2 rounded-full text-sm font-bold whitespace-nowrap">Bebidas</button>
+            <button id="btn-Sanduiches" onclick="filterCategory('Sanduiches')" class="cat-btn bg-yellow-500 text-white px-5 py-2 rounded-full text-xs font-bold whitespace-nowrap shadow-md">Sanduíches</button>
+            <button id="btn-Artesanais" onclick="filterCategory('Artesanais')" class="cat-btn bg-white border border-gray-200 px-5 py-2 rounded-full text-xs font-bold whitespace-nowrap">Artesanais</button>
+            <button id="btn-Bebidas" onclick="filterCategory('Bebidas')" class="cat-btn bg-white border border-gray-200 px-5 py-2 rounded-full text-xs font-bold whitespace-nowrap">Bebidas</button>
         </div>
     </div>
 
-    <main class="container mx-auto px-4 py-6 mb-20">
-        <div id="products-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+    <main class="container mx-auto px-4 py-4 mb-20">
+        <div id="products-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
     </main>
 
     <div id="options-modal" class="fixed inset-0 bg-black/70 z-[100] hidden flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl flex flex-col max-h-[85vh] relative">
-            <div class="p-6 bg-yellow-500 text-white font-black uppercase italic flex justify-between items-center shrink-0">
-                <span id="modal-title">Turbine seu Rei</span>
+            <div class="p-5 bg-yellow-500 text-white font-black uppercase italic flex justify-between items-center shrink-0">
+                <span id="modal-title" class="text-sm">Personalizar</span>
                 <button onclick="closeOptions()"><i class="fas fa-times"></i></button>
             </div>
-            <div class="p-6 space-y-4 overflow-y-auto pb-24" id="options-container"></div>
+            <div class="p-6 space-y-3 overflow-y-auto pb-24" id="options-container"></div>
             <div class="absolute bottom-6 left-0 w-full px-6">
                 <button id="confirm-addons" class="w-full bg-gray-900 text-white py-4 rounded-2xl font-black uppercase shadow-xl flex items-center justify-center gap-2">
-                    <i class="fas fa-check"></i> Confirmar e Adicionar
+                    <i class="fas fa-check"></i> Confirmar
                 </button>
             </div>
         </div>
     </div>
 
-    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full md:w-[450px] bg-white shadow-2xl z-[60] transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full md:w-[400px] bg-white shadow-2xl z-[60] transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
         <div class="p-6 bg-gray-900 text-white flex justify-between items-center">
-            <h2 class="text-xl font-black italic uppercase text-yellow-500">Seu Pedido</h2>
+            <h2 class="text-lg font-black italic uppercase text-yellow-500">Seu Pedido</h2>
             <button onclick="toggleCart()" class="text-white text-2xl"><i class="fas fa-times"></i></button>
         </div>
-        <div class="flex-grow overflow-y-auto p-4 space-y-6 bg-gray-50">
-            <div id="cart-items" class="space-y-3"></div>
-            <div id="form-container" class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-4">
-                <h3 class="text-xs font-black uppercase text-gray-400 mb-2">Informações de Entrega</h3>
+        <div class="flex-grow overflow-y-auto p-4 space-y-4 bg-gray-50">
+            <div id="cart-items" class="space-y-2"></div>
+            <div id="form-container" class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 space-y-3">
                 <div class="flex gap-2 p-1 bg-gray-100 rounded-xl">
-                    <button id="btn-delivery" onclick="setMethod('Entrega')" class="method-btn active flex-1 py-2 rounded-lg font-bold text-xs transition-all">ENTREGA</button>
-                    <button id="btn-pickup" onclick="setMethod('Retirada')" class="method-btn flex-1 py-2 rounded-lg font-bold text-xs transition-all">RETIRADA</button>
+                    <button id="btn-delivery" onclick="setMethod('Entrega')" class="method-btn active flex-1 py-2 rounded-lg font-bold text-[10px]">ENTREGA</button>
+                    <button id="btn-pickup" onclick="setMethod('Retirada')" class="method-btn flex-1 py-2 rounded-lg font-bold text-[10px]">RETIRADA</button>
                 </div>
-                <input type="text" id="cust-name" placeholder="Seu Nome" class="w-full bg-gray-100 border-none rounded-xl p-3 text-sm focus:ring-2 focus:ring-yellow-500">
+                <input type="text" id="cust-name" placeholder="Seu Nome" class="w-full bg-gray-100 border-none rounded-xl p-3 text-sm">
                 <div id="address-box">
-                    <textarea id="cust-address" placeholder="Endereço Completo (Rua, Número, Bairro, Referência)" class="w-full bg-gray-100 border-none rounded-xl p-3 text-sm focus:ring-2 focus:ring-yellow-500 h-20"></textarea>
+                    <textarea id="cust-address" placeholder="Endereço Completo" class="w-full bg-gray-100 border-none rounded-xl p-3 text-sm h-20"></textarea>
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <select id="cust-payment" class="w-full bg-gray-100 border-none rounded-xl p-3 text-sm">
@@ -146,51 +143,26 @@
                         <option value="Cartão">Cartão</option>
                         <option value="Dinheiro">Dinheiro</option>
                     </select>
-                    <input type="text" id="cust-change" placeholder="Troco para?" class="w-full bg-gray-100 border-none rounded-xl p-3 text-sm">
+                    <input type="text" id="cust-change" placeholder="Troco?" class="w-full bg-gray-100 border-none rounded-xl p-3 text-sm">
                 </div>
             </div>
         </div>
         <div class="p-6 border-t bg-white">
-            <div class="flex justify-between items-center mb-6">
-                <span class="text-gray-500 font-bold uppercase text-xs">Total</span>
-                <span id="cart-total" class="text-3xl font-black text-orange-600">R$ 0,00</span>
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-gray-500 font-bold uppercase text-[10px]">Total</span>
+                <span id="cart-total" class="text-2xl font-black text-orange-600">R$ 0,00</span>
             </div>
-            <button onclick="sendOrder()" class="w-full primary-gradient text-white py-4 rounded-2xl font-black text-lg shadow-xl flex items-center justify-center gap-3 uppercase">
-                <i class="fab fa-whatsapp text-2xl"></i> Enviar Pedido
+            <button onclick="sendOrder()" class="w-full primary-gradient text-white py-4 rounded-2xl font-black uppercase shadow-xl flex items-center justify-center gap-3">
+                <i class="fab fa-whatsapp text-xl"></i> Enviar Pedido
             </button>
         </div>
     </div>
 
     <div id="overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[55] hidden"></div>
 
-    <div id="admin-modal" class="fixed inset-0 bg-black/90 z-[200] hidden flex items-center justify-center p-4 backdrop-blur-md">
-        <div class="bg-white rounded-3xl w-full max-w-sm p-6 shadow-2xl">
-            <h2 class="text-xl font-black mb-4 uppercase">Painel Administrativo</h2>
-            <div class="space-y-4">
-                <div>
-                    <label class="text-[10px] font-bold text-gray-400 uppercase">Status manual da Loja</label>
-                    <select id="admin-status-select" class="w-full bg-gray-100 p-3 rounded-xl font-bold mt-1">
-                        <option value="aberto">ABERTO</option>
-                        <option value="fechado">FECHADO</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="text-[10px] font-bold text-gray-400 uppercase">Texto do Horário</label>
-                    <input type="text" id="admin-horario-input" class="w-full bg-gray-100 p-3 rounded-xl mt-1 text-sm font-bold" placeholder="Ex: 18:00 às 22:30">
-                </div>
-                <button onclick="saveAdminChanges()" class="w-full bg-green-600 text-white py-4 rounded-2xl font-black uppercase shadow-lg">Salvar Configurações</button>
-                <button onclick="closeAdmin()" class="w-full text-gray-400 text-xs font-bold uppercase py-2 text-center">Sair</button>
-            </div>
-        </div>
-    </div>
-
-    <footer class="py-10 text-center opacity-20">
-        <button onclick="openAdminPrompt()" class="text-[9px] uppercase font-bold tracking-widest">Acesso Administrativo</button>
-    </footer>
-
     <script>
         const WHATSAPP_NUMBER = "61999179675";
-        const ADMIN_PASS = "Fazenda51@"; // SENHA ATUALIZADA AQUI
+        const ADMIN_PASS = "Fazenda51@"; 
         
         let orderMethod = "Entrega";
         let currentAddons = [];
@@ -214,66 +186,47 @@
             { id: 7, name: "Rei Insano", price: 27.00, desc: "Hambúrguer Artesanal, Filé de frango, Calabresa, Bacon, Presunto, Queijo, Ovo, Batata, Milho, Alface e Tomate.", category: "Artesanais", img: "https://tse4.mm.bing.net/th/id/OIP.0kbGCSI19_hbJBNLmOWN1gHaHa?rs=1&pid=ImgDetMain&o=7&rm=3", hasAddons: true },
             { id: 8, name: "Soberano Artesanal", price: 32.00, desc: "Dois hambúrgueres artesanais, Presunto, Queijo, Milho, Ovo, Batata, Alface, Tomate e Bacon.", category: "Artesanais", img: "https://tse3.mm.bing.net/th/id/OIP._ukZ8NYAT2Js62cjAzqawgHaGh?rs=1&pid=ImgDetMain&o=7&rm=3", hasAddons: true },
             { id: 9, name: "Rei dos Reis", price: 37.00, desc: "2 Hambúrgueres Artesanais, Filé de frango, 2 Ovos, Calabresa, Bacon, Presunto, Queijo, Alface e Tomate.", category: "Artesanais", img: "https://imagens.jotaja.com/produtos/d4a28843-7b32-4f40-bce6-c491f8851421.jpg", hasAddons: true },
-            { id: 16, name: "Rei Bacana", price: 35.00, desc: "Pão, alface, Hambúrguer artesanal, bacon, ovo, presunto, mussarela, tomate e pickles.", category: "Artesanais", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=500", hasAddons: true },
-            { id: 10, name: "Cerveja lata", price: 4.50, desc: "Gelada.", category: "Bebidas", img: "https://amazonasatual.com.br/wp-content/uploads/2021/12/Cervejas-em-lata-Divulgacao-800x530.jpg", options: ["Skol", "Brahma", "Antarctica"] },
-            { id: 11, name: "Refrigerante lata", price: 4.50, desc: "Gelada.", category: "Bebidas", img: "https://lanchonautas.com.br/wp-content/uploads/2022/05/refrilata-1.png", options: ["Coca-Cola", "Guaraná", "Fanta"] },
+            { id: 10, name: "Cerveja lata", price: 4.50, desc: "Skol, Brahma ou Antartica.", category: "Bebidas", img: "https://amazonasatual.com.br/wp-content/uploads/2021/12/Cervejas-em-lata-Divulgacao-800x530.jpg", options: ["Skol", "Brahma", "Antarctica"] },
+            { id: 11, name: "Refrigerante lata", price: 4.50, desc: "Coca, Guaraná ou Fanta.", category: "Bebidas", img: "https://lanchonautas.com.br/wp-content/uploads/2022/05/refrilata-1.png", options: ["Coca-Cola", "Guaraná", "Fanta"] },
             { id: 13, name: "Coca Cola 1,5L", price: 10.50, desc: "Garrafa gelada.", category: "Bebidas", img: "https://tdc0wy.vteximg.com.br/arquivos/ids/159102-1000-1000/REFRIGERANTE-COCA-COLA-PET-15L-ORIGINAL.png?v=638121787162800000" },
-            { id: 12, name: "Suco Del Valle Maracujá", price: 10.70, desc: "1 Litro - Gelado.", category: "Bebidas", img: "https://www.bernardaoemcasa.com.br/media/catalog/product/cache/1/image/500x500/9df78eab33525d08d6e5fb8d27136e95/3/d/3d_front_view_v1_del_valle_nectar_maracuja_tetrabrik_1000ml_1573_mainline_seca.png" },
-            { id: 14, name: "Suco Del Valle Pêssego", price: 10.70, desc: "1 Litro - Gelado.", category: "Bebidas", img: "https://http2.mlstatic.com/D_NQ_NP_2X_778083-MLA92206226691_092025-F.webp" },
-            { id: 15, name: "Suco Del Valle Uva", price: 10.70, desc: "1 Litro - Gelado.", category: "Bebidas", img: "https://mercantilnovaera.vtexassets.com/arquivos/ids/220480-1200-auto?v=638798909754400000&width=1200&height=auto&aspect=true" }
+            { id: 12, name: "Suco Maracujá", price: 10.70, desc: "Del Valle 1 Litro.", category: "Bebidas", img: "https://www.bernardaoemcasa.com.br/media/catalog/product/cache/1/image/500x500/9df78eab33525d08d6e5fb8d27136e95/3/d/3d_front_view_v1_del_valle_nectar_maracuja_tetrabrik_1000ml_1573_mainline_seca.png" },
+            { id: 14, name: "Suco Pêssego", price: 10.70, desc: "Del Valle 1 Litro.", category: "Bebidas", img: "https://http2.mlstatic.com/D_NQ_NP_2X_778083-MLA92206226691_092025-F.webp" },
+            { id: 15, name: "Suco Uva", price: 10.70, desc: "Del Valle 1 Litro.", category: "Bebidas", img: "https://mercantilnovaera.vtexassets.com/arquivos/ids/220480-1200-auto?v=638798909754400000&width=1200&height=auto&aspect=true" }
         ];
 
         function checkStatus() {
             const statusTag = document.getElementById('status-loja');
             const statusSalvo = localStorage.getItem('rei_status') || 'aberto';
-            document.getElementById('display-horario').innerText = localStorage.getItem('rei_horario') || '18:00 às 22:30';
             if (statusSalvo === 'aberto') {
                 statusTag.innerText = "Aberto";
-                statusTag.className = "bg-green-100 text-green-700 text-[10px] font-black px-2 py-1 rounded-md uppercase italic";
+                statusTag.className = "bg-green-100 text-green-700 text-[9px] font-black px-2 py-1 rounded-md uppercase italic";
                 return true;
             } else {
                 statusTag.innerText = "Fechado";
-                statusTag.className = "bg-red-100 text-red-700 text-[10px] font-black px-2 py-1 rounded-md uppercase italic";
+                statusTag.className = "bg-red-100 text-red-700 text-[9px] font-black px-2 py-1 rounded-md uppercase italic";
                 return false;
             }
         }
 
-        function openAdminPrompt() {
-            const pass = prompt("Senha Administrativa:");
-            if (pass === ADMIN_PASS) {
-                document.getElementById('admin-modal').classList.remove('hidden');
-                document.getElementById('admin-status-select').value = localStorage.getItem('rei_status') || 'aberto';
-                document.getElementById('admin-horario-input').value = localStorage.getItem('rei_horario') || '18:00 às 22:30';
-            } else if (pass !== null) { alert("Senha Incorreta!"); }
-        }
-
-        function saveAdminChanges() {
-            localStorage.setItem('rei_status', document.getElementById('admin-status-select').value);
-            localStorage.setItem('rei_horario', document.getElementById('admin-horario-input').value);
-            alert("Salvo!"); closeAdmin(); checkStatus();
-        }
-
-        function closeAdmin() { document.getElementById('admin-modal').classList.add('hidden'); }
-
         function renderProducts() {
             const grid = document.getElementById('products-list');
-            grid.className = `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 category-${currentCategory.toLowerCase()}`;
+            grid.className = `grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 category-${currentCategory.toLowerCase()}`;
             const filtered = products.filter(p => p.category === currentCategory);
             grid.innerHTML = filtered.map(product => `
-                <div class="product-card bg-white rounded-3xl shadow-md border border-gray-100 overflow-hidden flex flex-col h-full">
-                    <div class="img-container relative w-full">
+                <div class="product-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col h-full">
+                    <div class="img-container">
                         <img src="${product.img}">
-                        <span class="ilustrativa-tag">*Ilustrativa</span>
+                        <span class="ilustrativa-tag">imagem meramente ilustrativa</span>
                     </div>
-                    <div class="p-5 flex-grow">
-                        <div class="flex justify-between items-start mb-2 gap-2">
-                            <h3 class="font-black text-gray-900 uppercase text-md tracking-tighter leading-tight">${product.name}</h3>
-                            <span class="text-orange-600 font-black text-lg whitespace-nowrap">R$ ${product.price.toFixed(2).replace('.', ',')}</span>
+                    <div class="p-4 flex-grow">
+                        <div class="flex justify-between items-start mb-1 gap-2">
+                            <h3 class="font-black text-gray-900 uppercase text-sm tracking-tighter leading-tight">${product.name}</h3>
+                            <span class="text-orange-600 font-black text-md">R$ ${product.price.toFixed(2).replace('.', ',')}</span>
                         </div>
-                        <p class="text-gray-500 text-xs leading-relaxed mb-4 line-clamp-2">${product.desc}</p>
+                        <p class="text-gray-500 text-[10px] leading-tight mb-3 line-clamp-2">${product.desc}</p>
                     </div>
-                    <div class="px-5 pb-5 mt-auto">
-                        <button onclick="openProductLogic(${product.id})" class="w-full bg-gray-900 text-white py-3 rounded-xl font-black text-xs uppercase tracking-widest shadow-lg active:scale-95 transition-transform">
+                    <div class="px-4 pb-4 mt-auto">
+                        <button onclick="openProductLogic(${product.id})" class="w-full bg-gray-900 text-white py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest shadow active:scale-95 transition-transform">
                             + Adicionar
                         </button>
                     </div>
@@ -287,8 +240,8 @@
                 const btnText = btn.innerText.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
                 const catText = cat.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
                 btn.className = (btnText === catText) 
-                    ? "cat-btn bg-yellow-500 text-white px-5 py-2 rounded-full text-sm font-bold shadow-md whitespace-nowrap" 
-                    : "cat-btn bg-white border border-gray-200 px-5 py-2 rounded-full text-sm font-bold whitespace-nowrap";
+                    ? "cat-btn bg-yellow-500 text-white px-5 py-2 rounded-full text-xs font-bold shadow-md whitespace-nowrap" 
+                    : "cat-btn bg-white border border-gray-200 px-5 py-2 rounded-full text-xs font-bold whitespace-nowrap";
             });
             renderProducts();
         }
@@ -300,27 +253,30 @@
             const container = document.getElementById('options-container');
             const confirmBtn = document.getElementById('confirm-addons');
             confirmBtn.classList.remove('hidden');
+
             if (product.hasAddons) {
-                document.getElementById('modal-title').innerText = "ADICIONAIS: " + product.name;
-                container.innerHTML = `<p class="text-[10px] font-bold text-gray-400 uppercase mb-2">Deseja dar um upgrade?</p>` + addonsList.map(addon => `
-                    <label class="flex justify-between items-center p-4 bg-gray-50 rounded-2xl cursor-pointer hover:bg-yellow-50 transition-colors border border-transparent mb-2">
-                        <div class="flex items-center gap-3">
-                            <input type="checkbox" class="w-5 h-5 accent-yellow-500" onchange="toggleAddon('${addon.name}', ${addon.price})">
-                            <span class="text-sm font-bold text-gray-700">${addon.name}</span>
+                document.getElementById('modal-title').innerText = "Adicionais";
+                container.innerHTML = addonsList.map(addon => `
+                    <label class="flex justify-between items-center p-3 bg-gray-50 rounded-xl cursor-pointer mb-1">
+                        <div class="flex items-center gap-2">
+                            <input type="checkbox" class="w-4 h-4 accent-yellow-500" onchange="toggleAddon('${addon.name}', ${addon.price})">
+                            <span class="text-xs font-bold">${addon.name}</span>
                         </div>
-                        <span class="text-xs font-black text-orange-600">+ R$ ${addon.price.toFixed(2)}</span>
+                        <span class="text-[10px] font-black text-orange-600">+ R$ ${addon.price.toFixed(2)}</span>
                     </label>`).join('');
                 confirmBtn.onclick = () => addWithAddons(productId);
                 modal.classList.remove('hidden');
             } else if (product.options) {
-                document.getElementById('modal-title').innerText = "Escolha sua opção";
+                document.getElementById('modal-title').innerText = "Sabor";
                 confirmBtn.classList.add('hidden');
                 container.innerHTML = product.options.map(opt => `
-                    <button onclick="addWithOption(${product.id}, '${opt}')" class="w-full p-4 bg-gray-50 hover:bg-yellow-50 rounded-2xl text-left font-bold text-sm flex justify-between mb-2">
+                    <button onclick="addWithOption(${product.id}, '${opt}')" class="w-full p-4 bg-gray-50 rounded-xl text-left font-bold text-xs flex justify-between mb-1">
                         ${opt} <i class="fas fa-chevron-right text-yellow-500"></i>
                     </button>`).join('');
                 modal.classList.remove('hidden');
-            } else { addToCartSimple(productId); }
+            } else { 
+                addToCartSimple(productId); 
+            }
         }
 
         function toggleAddon(name, price) {
@@ -359,15 +315,15 @@
             document.getElementById('cart-count').classList.toggle('hidden', totalQty === 0);
             document.getElementById('cart-total').innerText = `R$ ${totalPrice.toFixed(2).replace('.', ',')}`;
             container.innerHTML = cart.map(item => `
-                <div class="bg-white p-3 rounded-xl flex items-center gap-3 border border-gray-100 shadow-sm">
+                <div class="bg-white p-3 rounded-xl flex items-center gap-3 border border-gray-100">
                     <div class="flex-grow">
-                        <h4 class="text-[10px] font-black uppercase text-gray-800">${item.name}</h4>
-                        <p class="text-orange-600 font-bold text-[10px]">R$ ${item.price.toFixed(2).replace('.', ',')}</p>
+                        <h4 class="text-[9px] font-black uppercase text-gray-800 leading-tight">${item.name}</h4>
+                        <p class="text-orange-600 font-bold text-[9px]">R$ ${item.price.toFixed(2).replace('.', ',')}</p>
                     </div>
                     <div class="flex items-center gap-2 bg-gray-100 rounded-lg p-1">
-                        <button onclick="changeQty(${item.cartId}, -1)" class="w-6 h-6 flex items-center justify-center font-bold">-</button>
-                        <span class="text-xs font-black w-4 text-center">${item.qty}</span>
-                        <button onclick="changeQty(${item.cartId}, 1)" class="w-6 h-6 flex items-center justify-center font-bold">+</button>
+                        <button onclick="changeQty(${item.cartId}, -1)" class="w-5 h-5 flex items-center justify-center font-bold">-</button>
+                        <span class="text-[10px] font-black w-4 text-center">${item.qty}</span>
+                        <button onclick="changeQty(${item.cartId}, 1)" class="w-5 h-5 flex items-center justify-center font-bold">+</button>
                     </div>
                 </div>`).join('');
         }
@@ -395,7 +351,7 @@
         }
 
         function sendOrder() {
-            if (!checkStatus()) { alert("O Rei da Chapa está fechado no momento!"); return; }
+            if (!checkStatus()) { alert("A loja está fechada no momento!"); return; }
             const name = document.getElementById('cust-name').value;
             const address = document.getElementById('cust-address').value;
             const payment = document.getElementById('cust-payment').value;
@@ -403,12 +359,13 @@
             if(!name) { alert("Diga seu nome!"); return; }
             if(orderMethod === 'Entrega' && !address) { alert("Informe o endereço!"); return; }
             if(cart.length === 0) { alert("Carrinho vazio!"); return; }
-            let msg = `👑 *REI DA CHAPA - NOVO PEDIDO*\n------------------------------\n*TIPO:* ${orderMethod.toUpperCase()}\n*CLIENTE:* ${name}\n`;
+
+            let msg = `👑 *REI DA CHAPA*\n------------------------------\n*TIPO:* ${orderMethod.toUpperCase()}\n*CLIENTE:* ${name}\n`;
             if(orderMethod === 'Entrega') msg += `*ENDEREÇO:* ${address}\n`;
             msg += `------------------------------\n*PEDIDO:*\n`;
             cart.forEach(item => { msg += `• ${item.qty}x ${item.name} - R$ ${(item.price * item.qty).toFixed(2)}\n`; });
             msg += `------------------------------\n*PAGAMENTO:* ${payment}\n`;
-            if(payment === 'Dinheiro' && change) msg += `*TROCO PARA:* ${change}\n`;
+            if(payment === 'Dinheiro' && change) msg += `*TROCO:* ${change}\n`;
             msg += `\n💰 *TOTAL:* ${document.getElementById('cart-total').innerText}`;
             window.open(`https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(msg)}`);
         }
