@@ -15,39 +15,25 @@
         .method-btn.active { background-color: #f59e0b; color: white; border-color: #f59e0b; }
         
         .img-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #fff;
-            overflow: hidden;
-            height: 200px; 
-            position: relative;
+            display: flex; align-items: center; justify-content: center;
+            background-color: #fff; overflow: hidden; height: 180px; position: relative;
         }
-        .img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .category-bebidas .img-container img {
-            object-fit: contain; 
-            padding: 15px;
-        }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; }
+        .category-bebidas .img-container img { object-fit: contain; padding: 12px; }
 
         .ilustrativa-tag {
-            position: absolute;
-            bottom: 3px;
-            right: 5px;
-            color: #fff9c4; 
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-            background-color: transparent;
-            font-size: 7px;
-            pointer-events: none;
-            text-transform: lowercase;
-            font-weight: 500;
+            position: absolute; bottom: 3px; right: 5px; color: #fff9c4; 
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3); font-size: 7px;
+            pointer-events: none; text-transform: lowercase; font-weight: 500;
         }
 
-        .product-card { transition: transform 0.2s; }
-        .product-card:active { transform: scale(0.98); }
+        /* Estilos do Painel Admin */
+        .admin-card-open { background-color: #dcfce7; border-color: #22c55e; }
+        .admin-card-closed { background-color: #fee2e2; border-color: #ef4444; }
+        
+        .btn-status-off { background-color: #e2e8f0; color: #64748b; border: 2px solid #cbd5e1; }
+        .btn-status-open-on { background-color: #22c55e; color: white; border: 2px solid #16a34a; box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3); }
+        .btn-status-closed-on { background-color: #ef4444; color: white; border: 2px solid #dc2626; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3); }
     </style>
 </head>
 <body class="text-gray-800">
@@ -78,12 +64,10 @@
     <div class="container mx-auto px-4 mt-4">
         <div class="bg-white rounded-2xl p-4 shadow-sm border-l-4 border-yellow-500 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="text-yellow-600 bg-yellow-100 p-2 rounded-lg">
-                    <i class="fas fa-clock"></i>
-                </div>
+                <div class="text-yellow-600 bg-yellow-100 p-2 rounded-lg"><i class="fas fa-clock"></i></div>
                 <div>
-                    <h4 class="text-[10px] font-black uppercase text-gray-900">Status</h4>
-                    <p class="text-[9px] font-bold text-gray-500 uppercase">Apenas Entrega</p>
+                    <h4 class="text-[10px] font-black uppercase text-gray-900">Atendimento</h4>
+                    <p class="text-[9px] font-bold text-gray-500 uppercase">Entrega / Retirada</p>
                 </div>
             </div>
             <div class="text-right">
@@ -104,6 +88,40 @@
     <main class="container mx-auto px-4 py-4 mb-20">
         <div id="products-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
     </main>
+
+    <div id="admin-modal" class="fixed inset-0 bg-black/80 z-[200] hidden flex items-center justify-center p-4 backdrop-blur-md">
+        <div class="bg-white rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl">
+            <div class="p-5 bg-gray-900 text-white flex justify-between items-center">
+                <h3 class="font-black uppercase text-sm italic tracking-widest"><i class="fas fa-user-shield mr-2 text-yellow-500"></i> Painel Admin</h3>
+                <button onclick="closeAdmin()"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div id="admin-container" class="p-6 space-y-6 transition-colors duration-300">
+                <div class="space-y-3">
+                    <p class="text-[10px] font-black text-gray-400 uppercase text-center italic mb-2">Selecione o Status da Loja</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button id="admin-btn-aberto" onclick="setAdminStatus('aberto')" class="py-4 rounded-2xl font-black uppercase text-sm flex flex-col items-center gap-1 transition-all">
+                            <i class="fas fa-door-open text-lg"></i>
+                            Aberto
+                        </button>
+                        <button id="admin-btn-fechado" onclick="setAdminStatus('fechado')" class="py-4 rounded-2xl font-black uppercase text-sm flex flex-col items-center gap-1 transition-all">
+                            <i class="fas fa-door-closed text-lg"></i>
+                            Fechado
+                        </button>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="font-bold text-[10px] uppercase text-gray-400 ml-1 italic">Horário de Funcionamento</label>
+                    <input type="text" id="admin-input-horario" class="w-full bg-white/50 border-2 border-gray-200 focus:border-yellow-500 rounded-xl p-3 text-sm font-bold outline-none transition-all" placeholder="Ex: 18:00 às 23:00">
+                </div>
+
+                <button onclick="saveAdminChanges()" class="w-full bg-gray-900 text-white py-4 rounded-2xl font-black uppercase shadow-lg active:scale-95 transition-all">
+                    Confirmar Alterações
+                </button>
+            </div>
+        </div>
+    </div>
 
     <div id="options-modal" class="fixed inset-0 bg-black/70 z-[100] hidden flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl flex flex-col max-h-[85vh] relative">
@@ -127,7 +145,7 @@
         </div>
         <div class="flex-grow overflow-y-auto p-4 space-y-4 bg-gray-50">
             <div id="cart-items" class="space-y-2"></div>
-            <div id="form-container" class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 space-y-3">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 space-y-3">
                 <div class="flex gap-2 p-1 bg-gray-100 rounded-xl">
                     <button id="btn-delivery" onclick="setMethod('Entrega')" class="method-btn active flex-1 py-2 rounded-lg font-bold text-[10px]">ENTREGA</button>
                     <button id="btn-pickup" onclick="setMethod('Retirada')" class="method-btn flex-1 py-2 rounded-lg font-bold text-[10px]">RETIRADA</button>
@@ -152,14 +170,14 @@
                 <span id="cart-total" class="text-2xl font-black text-orange-600">R$ 0,00</span>
             </div>
             <button onclick="sendOrder()" class="w-full primary-gradient text-white py-4 rounded-2xl font-black uppercase shadow-xl flex items-center justify-center gap-3">
-                <i class="fab fa-whatsapp text-xl"></i> Enviar Pedido
+                <i class="fab fa-whatsapp text-xl"></i> Finalizar Pedido
             </button>
         </div>
     </div>
 
-    <footer class="p-4 text-center">
-        <button onclick="openAdmin()" class="text-gray-300 hover:text-gray-500 transition-colors">
-            <i class="fas fa-cog"></i>
+    <footer class="p-10 text-center">
+        <button onclick="authAdmin()" class="text-gray-300 hover:text-yellow-600 transition-all">
+            <i class="fas fa-cog text-xl"></i>
         </button>
     </footer>
 
@@ -170,9 +188,9 @@
         const ADMIN_PASS = "Fazenda51@"; 
         
         let orderMethod = "Entrega";
-        let currentAddons = [];
         let cart = [];
         let currentCategory = 'Sanduiches';
+        let tempAdminStatus = 'aberto'; // Para controle no modal
 
         const addonsList = [
             { name: "Cheddar", price: 3.00 },
@@ -192,7 +210,7 @@
             { id: 7, name: "Rei Insano", price: 27.00, desc: "Hambúrguer Artesanal, Filé de frango, Calabresa, Bacon, Presunto, Queijo, Ovo, Batata, Milho, Alface e Tomate.", category: "Artesanais", img: "https://tse4.mm.bing.net/th/id/OIP.0kbGCSI19_hbJBNLmOWN1gHaHa?rs=1&pid=ImgDetMain&o=7&rm=3", hasAddons: true },
             { id: 8, name: "Soberano Artesanal", price: 32.00, desc: "Dois hambúrgueres artesanais, Presunto, Queijo, Milho, Ovo, Batata, Alface, Tomate e Bacon.", category: "Artesanais", img: "https://tse3.mm.bing.net/th/id/OIP._ukZ8NYAT2Js62cjAzqawgHaGh?rs=1&pid=ImgDetMain&o=7&rm=3", hasAddons: true },
             { id: 9, name: "Rei dos Reis", price: 37.00, desc: "2 Hambúrgueres Artesanais, Filé de frango, 2 Ovos, Calabresa, Bacon, Presunto, Queijo, Alface e Tomate.", category: "Artesanais", img: "https://imagens.jotaja.com/produtos/d4a28843-7b32-4f40-bce6-c491f8851421.jpg", hasAddons: true },
-            { id: 10, name: "Cerveja lata", price: 4.50, desc: "Skol, Brahma ou Antartica.", category: "Bebidas", img: "https://amazonasatual.com.br/wp-content/uploads/2021/12/Cervejas-em-lata-Divulgacao-800x530.jpg", options: ["Skol", "Brahma", "Antarctica"] },
+            { id: 10, name: "Cerveja lata", price: 4.50, desc: "Skol, Brahma ou Antarctica.", category: "Bebidas", img: "https://amazonasatual.com.br/wp-content/uploads/2021/12/Cervejas-em-lata-Divulgacao-800x530.jpg", options: ["Skol", "Brahma", "Antarctica"] },
             { id: 11, name: "Refrigerante lata", price: 4.50, desc: "Coca, Guaraná ou Fanta.", category: "Bebidas", img: "https://lanchonautas.com.br/wp-content/uploads/2022/05/refrilata-1.png", options: ["Coca-Cola", "Guaraná", "Fanta"] },
             { id: 13, name: "Coca Cola 1,5L", price: 10.50, desc: "Garrafa gelada.", category: "Bebidas", img: "https://tdc0wy.vteximg.com.br/arquivos/ids/159102-1000-1000/REFRIGERANTE-COCA-COLA-PET-15L-ORIGINAL.png?v=638121787162800000" },
             { id: 12, name: "Suco Maracujá", price: 10.70, desc: "Del Valle 1 Litro.", category: "Bebidas", img: "https://www.bernardaoemcasa.com.br/media/catalog/product/cache/1/image/500x500/9df78eab33525d08d6e5fb8d27136e95/3/d/3d_front_view_v1_del_valle_nectar_maracuja_tetrabrik_1000ml_1573_mainline_seca.png" },
@@ -200,197 +218,198 @@
             { id: 15, name: "Suco Uva", price: 10.70, desc: "Del Valle 1 Litro.", category: "Bebidas", img: "https://mercantilnovaera.vtexassets.com/arquivos/ids/220480-1200-auto?v=638798909754400000&width=1200&height=auto&aspect=true" }
         ];
 
-        // FUNÇÕES ADMINISTRATIVAS
-        function checkStatus() {
-            const statusTag = document.getElementById('status-loja');
-            const statusSalvo = localStorage.getItem('rei_status') || 'aberto';
-            if (statusSalvo === 'aberto') {
-                statusTag.innerText = "Aberto";
-                statusTag.className = "bg-green-100 text-green-700 text-[9px] font-black px-2 py-1 rounded-md uppercase italic";
-                return true;
-            } else {
-                statusTag.innerText = "Fechado";
-                statusTag.className = "bg-red-100 text-red-700 text-[9px] font-black px-2 py-1 rounded-md uppercase italic";
-                return false;
-            }
-        }
-
-        function openAdmin() {
-            const pass = prompt("Digite a senha de administrador:");
+        // --- LÓGICA ADMINISTRADOR ---
+        function authAdmin() {
+            const pass = prompt("Senha do Admin:");
             if (pass === ADMIN_PASS) {
-                const acao = confirm("Deseja ABRIR a loja? (Clique em cancelar para FECHAR)");
-                localStorage.setItem('rei_status', acao ? 'aberto' : 'fechado');
-                checkStatus();
-                alert(`Loja ${acao ? 'Aberta' : 'Fechada'} com sucesso!`);
-            } else if (pass !== null) {
-                alert("Senha incorreta!");
+                const modal = document.getElementById('admin-modal');
+                tempAdminStatus = localStorage.getItem('rei_status') || 'aberto';
+                document.getElementById('admin-input-horario').value = localStorage.getItem('rei_horario') || "18:00 às 22:30";
+                setAdminStatus(tempAdminStatus); 
+                modal.classList.remove('hidden');
+            } else if (pass) { alert("Senha incorreta!"); }
+        }
+
+        function setAdminStatus(status) {
+            tempAdminStatus = status;
+            const btnAberto = document.getElementById('admin-btn-aberto');
+            const btnFechado = document.getElementById('admin-btn-fechado');
+            const container = document.getElementById('admin-container');
+
+            if (status === 'aberto') {
+                btnAberto.className = "py-4 rounded-2xl font-black uppercase text-sm flex flex-col items-center gap-1 transition-all btn-status-open-on";
+                btnFechado.className = "py-4 rounded-2xl font-black uppercase text-sm flex flex-col items-center gap-1 transition-all btn-status-off";
+                container.className = "p-6 space-y-6 transition-colors duration-300 admin-card-open";
+            } else {
+                btnAberto.className = "py-4 rounded-2xl font-black uppercase text-sm flex flex-col items-center gap-1 transition-all btn-status-off";
+                btnFechado.className = "py-4 rounded-2xl font-black uppercase text-sm flex flex-col items-center gap-1 transition-all btn-status-closed-on";
+                container.className = "p-6 space-y-6 transition-colors duration-300 admin-card-closed";
             }
         }
 
-        // FUNÇÕES DO CARDÁPIO
+        function saveAdminChanges() {
+            const horario = document.getElementById('admin-input-horario').value;
+            localStorage.setItem('rei_status', tempAdminStatus);
+            localStorage.setItem('rei_horario', horario);
+            updateStatusUI();
+            alert("Cardápio Atualizado com Sucesso!");
+            closeAdmin();
+        }
+
+        function updateStatusUI() {
+            const status = localStorage.getItem('rei_status') || 'aberto';
+            const horario = localStorage.getItem('rei_horario') || '18:00 às 22:30';
+            const tag = document.getElementById('status-loja');
+            document.getElementById('display-horario').innerText = horario;
+            if (status === 'aberto') {
+                tag.innerText = "Aberto";
+                tag.className = "bg-green-100 text-green-700 text-[9px] font-black px-2 py-1 rounded-md uppercase italic";
+            } else {
+                tag.innerText = "Fechado";
+                tag.className = "bg-red-100 text-red-700 text-[9px] font-black px-2 py-1 rounded-md uppercase italic";
+            }
+        }
+
+        // --- SISTEMA DO CARDÁPIO ---
         function renderProducts() {
             const grid = document.getElementById('products-list');
             grid.className = `grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 category-${currentCategory.toLowerCase()}`;
             const filtered = products.filter(p => p.category === currentCategory);
-            grid.innerHTML = filtered.map(product => `
+            grid.innerHTML = filtered.map(p => `
                 <div class="product-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col h-full">
                     <div class="img-container">
-                        <img src="${product.img}">
+                        <img src="${p.img}">
                         <span class="ilustrativa-tag">imagem meramente ilustrativa</span>
                     </div>
                     <div class="p-4 flex-grow">
                         <div class="flex justify-between items-start mb-1 gap-2">
-                            <h3 class="font-black text-gray-900 uppercase text-sm tracking-tighter leading-tight">${product.name}</h3>
-                            <span class="text-orange-600 font-black text-md">R$ ${product.price.toFixed(2).replace('.', ',')}</span>
+                            <h3 class="font-black text-gray-900 uppercase text-sm leading-tight">${p.name}</h3>
+                            <span class="text-orange-600 font-black text-md">R$ ${p.price.toFixed(2).replace('.', ',')}</span>
                         </div>
-                        <p class="text-gray-500 text-[10px] leading-tight mb-3 line-clamp-2">${product.desc}</p>
+                        <p class="text-gray-500 text-[10px] leading-tight mb-3">${p.desc}</p>
                     </div>
                     <div class="px-4 pb-4 mt-auto">
-                        <button onclick="openProductLogic(${product.id})" class="w-full bg-gray-900 text-white py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest shadow active:scale-95 transition-transform">
+                        <button onclick="openProductLogic(${p.id})" class="w-full bg-gray-900 text-white py-2.5 rounded-xl font-black text-[10px] uppercase shadow">
                             + Adicionar
                         </button>
                     </div>
-                </div>
-            `).join('');
+                </div>`).join('');
         }
 
         function filterCategory(cat) {
             currentCategory = cat;
             document.querySelectorAll('.cat-btn').forEach(btn => {
-                const btnText = btn.innerText.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-                const catText = cat.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-                btn.className = (btnText === catText) 
-                    ? "cat-btn bg-yellow-500 text-white px-5 py-2 rounded-full text-xs font-bold shadow-md whitespace-nowrap" 
-                    : "cat-btn bg-white border border-gray-200 px-5 py-2 rounded-full text-xs font-bold whitespace-nowrap";
+                const isSelected = btn.id === `btn-${cat}`;
+                btn.className = isSelected ? "cat-btn bg-yellow-500 text-white px-5 py-2 rounded-full text-xs font-bold shadow-md whitespace-nowrap" : "cat-btn bg-white border border-gray-200 px-5 py-2 rounded-full text-xs font-bold whitespace-nowrap";
             });
             renderProducts();
         }
 
-        function openProductLogic(productId) {
-            const product = products.find(p => p.id === productId);
-            currentAddons = [];
-            const modal = document.getElementById('options-modal');
+        function openProductLogic(pid) {
+            const p = products.find(x => x.id === pid);
             const container = document.getElementById('options-container');
             const confirmBtn = document.getElementById('confirm-addons');
             confirmBtn.classList.remove('hidden');
 
-            if (product.hasAddons) {
+            if (p.hasAddons) {
                 document.getElementById('modal-title').innerText = "Adicionais";
-                container.innerHTML = addonsList.map(addon => `
+                container.innerHTML = addonsList.map(a => `
                     <label class="flex justify-between items-center p-3 bg-gray-50 rounded-xl cursor-pointer mb-1">
                         <div class="flex items-center gap-2">
-                            <input type="checkbox" class="w-4 h-4 accent-yellow-500" onchange="toggleAddon('${addon.name}', ${addon.price})">
-                            <span class="text-xs font-bold">${addon.name}</span>
+                            <input type="checkbox" class="w-4 h-4 accent-yellow-500" onchange="toggleAddon('${a.name}', ${a.price})">
+                            <span class="text-xs font-bold">${a.name}</span>
                         </div>
-                        <span class="text-[10px] font-black text-orange-600">+ R$ ${addon.price.toFixed(2)}</span>
+                        <span class="text-[10px] font-black text-orange-600">+ R$ ${a.price.toFixed(2)}</span>
                     </label>`).join('');
-                confirmBtn.onclick = () => addWithAddons(productId);
-                modal.classList.remove('hidden');
-            } else if (product.options) {
-                document.getElementById('modal-title').innerText = "Sabor";
+                confirmBtn.onclick = () => {
+                    let totalP = p.price + (window.currentAddons || []).reduce((acc, x) => acc + x.price, 0);
+                    let name = p.name + (window.currentAddons?.length ? " (+" + window.currentAddons.map(x=>x.name).join(", ") + ")" : "");
+                    cart.push({...p, name, price: totalP, cartId: Date.now(), qty: 1});
+                    closeOptions(); updateCart();
+                };
+                document.getElementById('options-modal').classList.remove('hidden');
+            } else if (p.options) {
+                document.getElementById('modal-title').innerText = "Escolha o Sabor";
                 confirmBtn.classList.add('hidden');
-                container.innerHTML = product.options.map(opt => `
-                    <button onclick="addWithOption(${product.id}, '${opt}')" class="w-full p-4 bg-gray-50 rounded-xl text-left font-bold text-xs flex justify-between mb-1">
-                        ${opt} <i class="fas fa-chevron-right text-yellow-500"></i>
+                container.innerHTML = p.options.map(o => `
+                    <button onclick="addWithOption(${p.id}, '${o}')" class="w-full p-4 bg-gray-50 rounded-xl text-left font-bold text-xs flex justify-between mb-1">
+                        ${o} <i class="fas fa-chevron-right text-yellow-500"></i>
                     </button>`).join('');
-                modal.classList.remove('hidden');
-            } else { 
-                addToCartSimple(productId); 
+                document.getElementById('options-modal').classList.remove('hidden');
+            } else {
+                cart.push({...p, qty: 1, cartId: Date.now()});
+                updateCart();
             }
         }
 
-        function toggleAddon(name, price) {
-            const index = currentAddons.findIndex(a => a.name === name);
-            if (index > -1) currentAddons.splice(index, 1);
-            else currentAddons.push({ name, price });
+        function toggleAddon(n, p) {
+            if(!window.currentAddons) window.currentAddons = [];
+            const i = window.currentAddons.findIndex(a => a.name === n);
+            if (i > -1) window.currentAddons.splice(i, 1); else window.currentAddons.push({name: n, price: p});
         }
 
-        function addWithAddons(productId) {
-            const product = products.find(p => p.id === productId);
-            let finalPrice = product.price;
-            let addonNames = currentAddons.map(a => a.name);
-            let addonText = addonNames.length > 0 ? " (+ " + addonNames.join(", ") + ")" : "";
-            finalPrice += currentAddons.reduce((acc, a) => acc + a.price, 0);
-            cart.push({ ...product, name: product.name + addonText, price: finalPrice, cartId: Date.now(), qty: 1 });
+        function addWithOption(pid, opt) {
+            const p = products.find(x => x.id === pid);
+            cart.push({...p, name: `${p.name} [${opt}]`, qty: 1, cartId: Date.now()});
             closeOptions(); updateCart();
-        }
-
-        function addWithOption(productId, option) {
-            const product = products.find(p => p.id === productId);
-            cart.push({ ...product, name: `${product.name} [${option}]`, qty: 1, cartId: Date.now() });
-            closeOptions(); updateCart();
-        }
-
-        function addToCartSimple(productId) {
-            const product = products.find(p => p.id === productId);
-            cart.push({ ...product, qty: 1, cartId: Date.now() });
-            updateCart();
         }
 
         function updateCart() {
-            const container = document.getElementById('cart-items');
-            const totalQty = cart.reduce((acc, item) => acc + item.qty, 0);
-            const totalPrice = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+            const totalQty = cart.reduce((acc, i) => acc + i.qty, 0);
+            const totalP = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
             document.getElementById('cart-count').innerText = totalQty;
             document.getElementById('cart-count').classList.toggle('hidden', totalQty === 0);
-            document.getElementById('cart-total').innerText = `R$ ${totalPrice.toFixed(2).replace('.', ',')}`;
-            container.innerHTML = cart.map(item => `
-                <div class="bg-white p-3 rounded-xl flex items-center gap-3 border border-gray-100">
+            document.getElementById('cart-total').innerText = `R$ ${totalP.toFixed(2).replace('.', ',')}`;
+            document.getElementById('cart-items').innerHTML = cart.map(i => `
+                <div class="bg-white p-3 rounded-xl flex items-center justify-between border border-gray-100">
                     <div class="flex-grow">
-                        <h4 class="text-[9px] font-black uppercase text-gray-800 leading-tight">${item.name}</h4>
-                        <p class="text-orange-600 font-bold text-[9px]">R$ ${item.price.toFixed(2).replace('.', ',')}</p>
+                        <h4 class="text-[9px] font-black uppercase text-gray-800 leading-tight">${i.name}</h4>
+                        <p class="text-orange-600 font-bold text-[9px]">R$ ${i.price.toFixed(2).replace('.', ',')}</p>
                     </div>
                     <div class="flex items-center gap-2 bg-gray-100 rounded-lg p-1">
-                        <button onclick="changeQty(${item.cartId}, -1)" class="w-5 h-5 flex items-center justify-center font-bold">-</button>
-                        <span class="text-[10px] font-black w-4 text-center">${item.qty}</span>
-                        <button onclick="changeQty(${item.cartId}, 1)" class="w-5 h-5 flex items-center justify-center font-bold">+</button>
+                        <button onclick="changeQty(${i.cartId}, -1)" class="w-5 h-5 font-bold">-</button>
+                        <span class="text-[10px] font-black w-4 text-center">${i.qty}</span>
+                        <button onclick="changeQty(${i.cartId}, 1)" class="w-5 h-5 font-bold">+</button>
                     </div>
                 </div>`).join('');
         }
 
-        function changeQty(cartId, delta) {
-            const item = cart.find(i => i.cartId === cartId);
-            if (item) {
-                item.qty += delta;
-                if (item.qty <= 0) cart = cart.filter(i => i.cartId !== cartId);
-            }
+        function changeQty(id, d) {
+            const i = cart.find(x => x.cartId === id);
+            if (i) { i.qty += d; if (i.qty <= 0) cart = cart.filter(x => x.cartId !== id); }
             updateCart();
         }
 
-        function closeOptions() { document.getElementById('options-modal').classList.add('hidden'); }
+        function closeOptions() { document.getElementById('options-modal').classList.add('hidden'); window.currentAddons = []; }
+        function closeAdmin() { document.getElementById('admin-modal').classList.add('hidden'); }
         function toggleCart() {
             document.getElementById('cart-sidebar').classList.toggle('translate-x-full');
             document.getElementById('overlay').classList.toggle('hidden');
         }
 
-        function setMethod(method) {
-            orderMethod = method;
-            document.getElementById('btn-delivery').classList.toggle('active', method === 'Entrega');
-            document.getElementById('btn-pickup').classList.toggle('active', method === 'Retirada');
-            document.getElementById('address-box').style.display = method === 'Entrega' ? 'block' : 'none';
+        function setMethod(m) {
+            orderMethod = m;
+            document.getElementById('btn-delivery').classList.toggle('active', m === 'Entrega');
+            document.getElementById('btn-pickup').classList.toggle('active', m === 'Retirada');
+            document.getElementById('address-box').style.display = m === 'Entrega' ? 'block' : 'none';
         }
 
         function sendOrder() {
-            if (!checkStatus()) { alert("A loja está fechada no momento!"); return; }
+            if (localStorage.getItem('rei_status') === 'fechado') { alert("Estamos fechados no momento!"); return; }
             const name = document.getElementById('cust-name').value;
-            const address = document.getElementById('cust-address').value;
-            const payment = document.getElementById('cust-payment').value;
-            const change = document.getElementById('cust-change').value;
-            if(!name) { alert("Diga seu nome!"); return; }
-            if(orderMethod === 'Entrega' && !address) { alert("Informe o endereço!"); return; }
-            if(cart.length === 0) { alert("Carrinho vazio!"); return; }
+            const addr = document.getElementById('cust-address').value;
+            const pay = document.getElementById('cust-payment').value;
+            if(!name || (orderMethod==='Entrega' && !addr) || cart.length===0) { alert("Preencha todos os campos!"); return; }
 
-            let msg = `👑 *REI DA CHAPA*\n------------------------------\n*TIPO:* ${orderMethod.toUpperCase()}\n*CLIENTE:* ${name}\n`;
-            if(orderMethod === 'Entrega') msg += `*ENDEREÇO:* ${address}\n`;
+            let msg = `👑 *REI DA CHAPA*\n------------------------------\n*CLIENTE:* ${name}\n*TIPO:* ${orderMethod.toUpperCase()}\n`;
+            if(orderMethod === 'Entrega') msg += `*ENDEREÇO:* ${addr}\n`;
             msg += `------------------------------\n*PEDIDO:*\n`;
-            cart.forEach(item => { msg += `• ${item.qty}x ${item.name} - R$ ${(item.price * item.qty).toFixed(2)}\n`; });
-            msg += `------------------------------\n*PAGAMENTO:* ${payment}\n`;
-            if(payment === 'Dinheiro' && change) msg += `*TROCO:* ${change}\n`;
-            msg += `\n💰 *TOTAL:* ${document.getElementById('cart-total').innerText}`;
+            cart.forEach(i => msg += `• ${i.qty}x ${i.name} - R$ ${(i.price * i.qty).toFixed(2)}\n`);
+            msg += `------------------------------\n💰 *TOTAL:* ${document.getElementById('cart-total').innerText}\n*PAGAMENTO:* ${pay}`;
             window.open(`https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(msg)}`);
         }
 
-        window.onload = () => { checkStatus(); renderProducts(); };
+        window.onload = () => { updateStatusUI(); renderProducts(); };
     </script>
 </body>
 </html>
