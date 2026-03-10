@@ -157,10 +157,17 @@
         </div>
     </div>
 
+    <footer class="p-4 text-center">
+        <button onclick="openAdmin()" class="text-gray-300 hover:text-gray-500 transition-colors">
+            <i class="fas fa-cog"></i>
+        </button>
+    </footer>
+
     <div id="overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[55] hidden"></div>
 
     <script>
         const WHATSAPP_NUMBER = "61999179675";
+        const ADMIN_PASS = "Fazenda51@"; 
         
         let orderMethod = "Entrega";
         let currentAddons = [];
@@ -193,6 +200,7 @@
             { id: 15, name: "Suco Uva", price: 10.70, desc: "Del Valle 1 Litro.", category: "Bebidas", img: "https://mercantilnovaera.vtexassets.com/arquivos/ids/220480-1200-auto?v=638798909754400000&width=1200&height=auto&aspect=true" }
         ];
 
+        // FUNÇÕES ADMINISTRATIVAS
         function checkStatus() {
             const statusTag = document.getElementById('status-loja');
             const statusSalvo = localStorage.getItem('rei_status') || 'aberto';
@@ -207,6 +215,19 @@
             }
         }
 
+        function openAdmin() {
+            const pass = prompt("Digite a senha de administrador:");
+            if (pass === ADMIN_PASS) {
+                const acao = confirm("Deseja ABRIR a loja? (Clique em cancelar para FECHAR)");
+                localStorage.setItem('rei_status', acao ? 'aberto' : 'fechado');
+                checkStatus();
+                alert(`Loja ${acao ? 'Aberta' : 'Fechada'} com sucesso!`);
+            } else if (pass !== null) {
+                alert("Senha incorreta!");
+            }
+        }
+
+        // FUNÇÕES DO CARDÁPIO
         function renderProducts() {
             const grid = document.getElementById('products-list');
             grid.className = `grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 category-${currentCategory.toLowerCase()}`;
